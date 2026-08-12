@@ -1,35 +1,23 @@
-export class Product {
-    constructor(
-        public sku: string,
-        public name: string,
-        public price: number
-    ) {}
+import { PhysicalProduct } from "./models/PhysicalProduct";
+import { DigitalProduct } from "./models/DigitalProduct";
+import { calculateTax } from "./utils/taxCalculator";
 
-    displayDetails(): string {
-        return `SKU: ${this.sku}, Name: ${this.name}, Price: $${this.price}`;
+const products = [
+    new PhysicalProduct("P101", "Laptop", 1000, 2.5),
+    new DigitalProduct("D101", "E-Book", 20, 15)
+];
+
+for (const product of products) {
+    console.log(product.displayDetails());
+
+    if (product instanceof PhysicalProduct) {
+        console.log("Weight:", product.formattedWeight);
     }
 
-    getPriceWithTax(): number {
-        return this.price;
-    }
-}
-import { Product } from "./Product";
-
-export class PhysicalProduct extends Product {
-    constructor(
-        sku: string,
-        name: string,
-        price: number,
-        public weight: number
-    ) {
-        super(sku, name, price);
+    if (product instanceof DigitalProduct) {
+        console.log("File Size:", product.formattedFileSize);
     }
 
-    override getPriceWithTax(): number {
-        return this.price * 1.10;
-    }
-
-    get formattedWeight(): string {
-        return `${this.weight} kg`;
-    }
+    console.log("Final Price: $" + calculateTax(product));
+    console.log("--------------------");
 }
