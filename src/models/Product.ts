@@ -1,9 +1,13 @@
 export class Product {
-    constructor(
-        public sku: string,
-        public name: string,
-        public price: number
-    ) {}
+    sku: string;
+    name: string;
+    price: number;
+
+    constructor(sku: string, name: string, price: number) {
+        this.sku = sku;
+        this.name = name;
+        this.price = price;
+    }
 
     displayDetails(): string {
         return `SKU: ${this.sku}, Name: ${this.name}, Price: $${this.price}`;
