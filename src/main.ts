@@ -7,17 +7,30 @@ const products = [
     new DigitalProduct("D101", "E-Book", 20, 15)
 ];
 
-for (const product of products) {
-    console.log(product.displayDetails());
+const app = document.getElementById("app");
 
-    if (product instanceof PhysicalProduct) {
-        console.log("Weight:", product.formattedWeight);
+if (app) {
+    for (const product of products) {
+        const productInfo = document.createElement("div");
+
+        productInfo.innerHTML = `
+            <h2>${product.name}</h2>
+            <p>${product.displayDetails()}</p>
+        `;
+
+        if (product instanceof PhysicalProduct) {
+            productInfo.innerHTML += `<p>Weight: ${product.formattedWeight}</p>`;
+        }
+
+        if (product instanceof DigitalProduct) {
+            productInfo.innerHTML += `<p>File Size: ${product.formattedFileSize}</p>`;
+        }
+
+        productInfo.innerHTML += `
+            <p>Final Price: $${calculateTax(product).toFixed(2)}</p>
+            <hr>
+        `;
+
+        app.appendChild(productInfo);
     }
-
-    if (product instanceof DigitalProduct) {
-        console.log("File Size:", product.formattedFileSize);
-    }
-
-    console.log("Final Price: $" + calculateTax(product));
-    console.log("--------------------");
 }
